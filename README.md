@@ -96,7 +96,9 @@ Output shape:
 (1280, 1024, 3)
 ```
 ![porshe](assets/images/porshe.png)
-
+<p align="center">
+  <img src="assets/images/porshe.png">
+</p>
 
 ### 8. Creating Blob from Image
 ```python
