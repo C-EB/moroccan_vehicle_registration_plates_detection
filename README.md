@@ -95,8 +95,9 @@ Output shape:
 ```css
 (1280, 1024, 3)
 ```
+![porshe](assets/images/porshe.png)
 
-==================================image
+
 ### 8. Creating Blob from Image
 ```python
 blob = cv2.dnn.blobFromImage(image_input, 1 / 255.0, (416, 416), swapRB=True, crop=False)
@@ -119,7 +120,10 @@ Displays the blob. Output shape:
 ```css
 (416, 416, 3)
 ```
-========================================================bolb image
+
+![blob](assets/images/bolb.png)
+
+
 ### 10. Forward Pass through YOLO
 ```python
 network.setInput(blob)
@@ -220,4 +224,5 @@ plt.show()
 ```
 Draws bounding boxes and labels on the image and displays it.
 
-====================image ouput 
+![output_image](assets/images/bolb.png)
+
