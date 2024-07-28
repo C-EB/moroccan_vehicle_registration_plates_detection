@@ -95,7 +95,7 @@ Output shape:
 ```css
 (1280, 1024, 3)
 ```
-![porshe](assets/images/porshe.png)
+
 <p align="center">
   <img src="assets/images/porshe.png">
 </p>
@@ -123,8 +123,9 @@ Displays the blob. Output shape:
 (416, 416, 3)
 ```
 
-![blob](assets/images/bolb.png)
-
+<p align="center">
+  <img src="assets/images/bolb.png">
+</p>
 
 ### 10. Forward Pass through YOLO
 ```python
@@ -226,5 +227,7 @@ plt.show()
 ```
 Draws bounding boxes and labels on the image and displays it.
 
-![output_image](assets/images/bolb.png)
+<p align="center">
+  <img src="assets/images/output_image.png">
+</p>
 
