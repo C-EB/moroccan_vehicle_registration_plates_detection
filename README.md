@@ -1,6 +1,6 @@
 # License Plate Detection using YOLOv4
 
-This project aims to detect Moroccan vehicle license plates using the YOLOv4 model. The Python code provided reads an image, processes it using the YOLOv4 model, and identifies and marks the license plates present in the image.
+The primary objective of this project is to implement a YOLOv4 neural network to detect and identify license plates in vehicle images. The implementation involves loading the pre-trained YOLOv4 model, processing the images, and visualizing the detection results.
 
 ## Dataset
 
