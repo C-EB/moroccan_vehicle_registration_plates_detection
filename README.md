@@ -64,4 +64,61 @@ Prints the indices of unconnected output layers and extracts their names. Output
 [327 353 379]
 ['yolo_139', 'yolo_150', 'yolo_161']
 ```
+### 7. Reading and Displaying the Image
 
+```python
+image_input = cv2.imread("WhatsApp Image 2023-10-28 at 18.15.55_8d3d7646.jpg")
+image_input_shape = image_input.shape
+print(image_input_shape)
+plt.imshow(cv2.cvtColor(image_input, cv2.COLOR_BGR2RGB))
+plt.show()
+```
+Reads the input image and displays its shape. Then, it displays the image. Output shape:
+```css
+(1280, 1024, 3)
+```
+### 8. Creating Blob from Image
+```python
+blob = cv2.dnn.blobFromImage(image_input, 1 / 255.0, (416, 416), swapRB=True, crop=False)
+print(image_input.shape)
+print(blob.shape)
+```
+Creates a blob from the image to pass to the YOLO model and prints the shapes. Output:
+```css
+(1280, 1024, 3)
+(1, 3, 416, 416)
+```
+### 9. Displaying the Blob
+```python
+blob_to_show = blob[0, :, :, :].transpose(1, 2, 0)
+print(blob_to_show.shape)
+plt.imshow(blob_to_show)
+plt.show()
+```
+Displays the blob. Output shape:
+```css
+(416, 416, 3)
+```
+
+### 10. Forward Pass through YOLO
+```python
+network.setInput(blob)
+start = time.time()
+output_from_network = network.forward(layers_names_output)
+end = time.time()
+print('YOLO v4 took {:.3f} seconds'.format(end - start))
+```
+Performs a forward pass through the YOLO network and measures the time taken. Output:
+```css
+YOLO v4 took 1.935 seconds
+```
+### 11. Processing YOLO Output
+```python
+print(type(output_from_network))
+print(type(output_from_network[0]))
+```
+Prints the types of the outputs. Output:
+```css
+<class 'tuple'>
+<class 'numpy.ndarray'>
+```
