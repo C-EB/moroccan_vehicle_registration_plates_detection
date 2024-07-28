@@ -122,3 +122,81 @@ Prints the types of the outputs. Output:
 <class 'tuple'>
 <class 'numpy.ndarray'>
 ```
+### 12. Generating Colors for Classes
+```python
+np.random.seed(42)
+colours = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
+print(colours.shape)
+print(colours[0])
+```
+Generates random colors for bounding boxes. Output:
+```css
+(1, 3)
+[102 220 225]
+```
+
+### 13. Detecting Objects
+```python
+bounding_boxes = []
+confidences = []
+class_numbers = []
+h, w = image_input_shape[:2]
+print(h, w)
+```
+Initializes lists for bounding boxes, confidences, and class numbers and prints the image dimensions. 
+Output:
+```css
+1280 1024
+```
+### 14. Extracting Bounding Boxes and Confidences
+```python
+for result in output_from_network:
+    for detection in result:
+        scores = detection[5:]
+        class_current = np.argmax(scores)
+        confidence_current = scores[class_current]
+        if confidence_current > probability_minimum:
+            box_current = detection[0:4] * np.array([w, h, w, h])
+            x_center, y_center, box_width, box_height = box_current.astype('int')
+            x_min = int(x_center - (box_width / 2))
+            y_min = int(y_center - (box_height / 2))
+            bounding_boxes.append([x_min, y_min, int(box_width), int(box_height)])
+            confidences.append(float(confidence_current))
+            class_numbers.append(class_current)
+```
+Extracts bounding boxes and confidences for detected objects.
+### 15. Applying Non-Maximum Suppression
+```python
+results = cv2.dnn.NMSBoxes(bounding_boxes, confidences, probability_minimum, threshold)
+```
+Applies Non-Maximum Suppression to filter out overlapping bounding boxes.
+### 16. Displaying Detected Labels
+```python
+for i in range(len(class_numbers)):
+    print(labels[int(class_numbers[i])])
+with open('found_labels.txt', 'w') as f:
+    for i in range(len(class_numbers)):
+        f.write(labels[int(class_numbers[i])])
+```
+Prints and saves detected labels. 
+Output:
+```css
+license_plate
+license_plate
+```
+### 17. Drawing Bounding Boxes
+```python
+if len(results) > 0:
+    for i in results.flatten():
+        x_min, y_min = bounding_boxes[i][0], bounding_boxes[i][1]
+        box_width, box_height = bounding_boxes[i][2], bounding_boxes[i][3]
+        colour_box_current = [int(j) for j in colours[class_numbers[i]]]
+        cv2.rectangle(image_input, (x_min, y_min), (x_min + box_width, y_min + box_height), colour_box_current, 2)
+        text_box_current = '{} : {:.2f}%'.format(labels[int(class_numbers[i])], confidences[i])
+        cv2.putText(image_input, text_box_current, (x_min, y_min - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.5, colour_box_current, 2)
+plt.imshow(cv2.cvtColor(image_input, cv2.COLOR_BGR2RGB))
+plt.axis('off')
+plt.show()
+```
+Draws bounding boxes and labels on the image and displays it.
+
